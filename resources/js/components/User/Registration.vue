@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="mt-3">
-            <input v-model="name" type="text" class="form-control mb-3" placeholder="text">
-            <input v-model="email" type="email" class="form-control mb-3" placeholder="email">
-            <input v-model="password" type="password" class="form-control mb-3" placeholder="password">
-            <input v-model="password_confirmation" type="password" class="form-control mb-3" placeholder="confirm password">
+            <input v-model="name" type="text" class="form-control mb-3" placeholder="Name">
+            <input v-model="email" type="email" class="form-control mb-3" placeholder="Email">
+            <input v-model="password" type="password" class="form-control mb-3" placeholder="Password">
+            <input v-model="password_confirmation" type="password" class="form-control mb-3" placeholder="Confirm password">
             <input @click.prevent="store" type="submit" class="btn btn-outline-success">
         </div>
     </div>

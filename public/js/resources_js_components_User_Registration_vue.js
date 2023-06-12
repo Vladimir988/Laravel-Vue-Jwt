@@ -63,7 +63,7 @@ var render = function render() {
     staticClass: "form-control mb-3",
     attrs: {
       type: "text",
-      placeholder: "text"
+      placeholder: "Name"
     },
     domProps: {
       value: _vm.name
@@ -84,7 +84,7 @@ var render = function render() {
     staticClass: "form-control mb-3",
     attrs: {
       type: "email",
-      placeholder: "email"
+      placeholder: "Email"
     },
     domProps: {
       value: _vm.email
@@ -105,7 +105,7 @@ var render = function render() {
     staticClass: "form-control mb-3",
     attrs: {
       type: "password",
-      placeholder: "password"
+      placeholder: "Password"
     },
     domProps: {
       value: _vm.password
@@ -126,7 +126,7 @@ var render = function render() {
     staticClass: "form-control mb-3",
     attrs: {
       type: "password",
-      placeholder: "confirm password"
+      placeholder: "Confirm password"
     },
     domProps: {
       value: _vm.password_confirmation

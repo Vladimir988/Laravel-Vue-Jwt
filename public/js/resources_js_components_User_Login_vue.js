@@ -42,13 +42,13 @@ var staticRenderFns = [function () {
     staticClass: "form-control mb-3",
     attrs: {
       type: "email",
-      placeholder: "email"
+      placeholder: "Email"
     }
   }), _vm._v(" "), _c("input", {
     staticClass: "form-control mb-3",
     attrs: {
       type: "password",
-      placeholder: "password"
+      placeholder: "Password"
     }
   }), _vm._v(" "), _c("input", {
     staticClass: "btn btn-outline-success",
