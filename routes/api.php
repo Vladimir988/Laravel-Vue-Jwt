@@ -24,8 +24,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
-    Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function () {
-        Route::get('/', 'IndexController');
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function () {
+            Route::get('/', 'IndexController');
+        });
     });
 });
 
