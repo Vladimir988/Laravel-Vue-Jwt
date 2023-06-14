@@ -15,18 +15,66 @@ __webpack_require__.r(__webpack_exports__);
   name: "Index",
   data: function data() {
     return {
-      fruits: null
+      fruits: null,
+      api: null
     };
   },
   methods: {
     getFruits: function getFruits() {
       var _this = this;
-      axios.get('/api/fruits').then(function (response) {
+      this.api.get('/api/auth/fruits', {
+        // headers: {
+        //     'authorization': `Bearer ${this.getCookie('access_token')}`,
+        // }
+      }).then(function (response) {
         _this.fruits = response.data.data;
       });
+    },
+    initApi: function initApi() {
+      var _this2 = this;
+      var api = axios.create();
+      api.interceptors.request.use(function (config) {
+        if (_this2.getCookie('access_token')) {
+          config.headers = {
+            'authorization': "Bearer ".concat(_this2.getCookie('access_token'))
+          };
+        }
+        return config;
+      }, function (error) {});
+      api.interceptors.response.use(function (config) {
+        if (_this2.getCookie('access_token')) {
+          config.headers = {
+            'authorization': "Bearer ".concat(_this2.getCookie('access_token'))
+          };
+        }
+        return config;
+      }, function (error) {
+        if (error.response.status === 401) {
+          _this2.$router.push({
+            name: 'users.login'
+          });
+        }
+      });
+      this.api = api;
+    },
+    getCookie: function getCookie(cname) {
+      var name = cname + '=';
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
     }
   },
   mounted: function mounted() {
+    this.initApi();
     this.getFruits();
   }
 });
