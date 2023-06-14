@@ -6,9 +6,7 @@ const api = axios.create();
 // request
 api.interceptors.request.use(config => {
     if(getCookie('access_token')) {
-        config.headers = {
-            'authorization': `Bearer ${getCookie('access_token')}`,
-        };
+        config.headers.authorization = `Bearer ${getCookie('access_token')}`;
     }
     return config;
 }, error => {});
@@ -16,13 +14,21 @@ api.interceptors.request.use(config => {
 // response
 api.interceptors.response.use(config => {
     if(getCookie('access_token')) {
-        config.headers = {
-            'authorization': `Bearer ${getCookie('access_token')}`,
-        };
+        config.headers.authorization = `Bearer ${getCookie('access_token')}`;
     }
     return config;
 }, error => {
-    if(error.response.status === 401) {
+    if(error.response.data.message === 'Token has expired') {
+        return axios.post('/api/auth/refresh', {}, {
+            headers: {
+                'authorization': `Bearer ${getCookie('access_token')}`
+            }
+        }).then(response => {
+            setCookie('access_token', response.data.access_token, 1);
+            error.config.headers.authorization = `Bearer ${response.data.access_token}`;
+            return api.request(error.config);
+        });
+    } else {
         router.push({name: 'users.login'});
     }
 });
@@ -41,6 +47,13 @@ function getCookie(cname) {
         }
     }
     return '';
+}
+
+function setCookie(name, value, lifetime) {
+    const d = new Date();
+    d.setTime(d.getTime() + (lifetime * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 export default api;
