@@ -23,6 +23,7 @@ export default {
             }).then(response => {
                 if(response.status === 200) {
                     this.setCookie('access_token', response.data.access_token, 1);
+                    this.$router.push({name: 'users.personal'});
                 }
             });
         },

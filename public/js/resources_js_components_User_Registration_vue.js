@@ -23,13 +23,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     store: function store() {
+      var _this = this;
       axios.post('/api/users', {
         name: this.name,
         email: this.email,
         password: this.password,
         password_confirmation: this.password_confirmation
       }).then(function (response) {
-        console.log(response);
+        _this.$router.push({
+          name: 'users.personal'
+        });
       });
     }
   }

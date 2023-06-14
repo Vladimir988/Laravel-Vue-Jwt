@@ -11,70 +11,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api */ "./resources/js/api.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index",
   data: function data() {
     return {
-      fruits: null,
-      api: null
+      fruits: null
     };
   },
   methods: {
     getFruits: function getFruits() {
       var _this = this;
-      this.api.get('/api/auth/fruits', {
-        // headers: {
-        //     'authorization': `Bearer ${this.getCookie('access_token')}`,
-        // }
-      }).then(function (response) {
+      _api__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/auth/fruits').then(function (response) {
         _this.fruits = response.data.data;
       });
-    },
-    initApi: function initApi() {
-      var _this2 = this;
-      var api = axios.create();
-      api.interceptors.request.use(function (config) {
-        if (_this2.getCookie('access_token')) {
-          config.headers = {
-            'authorization': "Bearer ".concat(_this2.getCookie('access_token'))
-          };
-        }
-        return config;
-      }, function (error) {});
-      api.interceptors.response.use(function (config) {
-        if (_this2.getCookie('access_token')) {
-          config.headers = {
-            'authorization': "Bearer ".concat(_this2.getCookie('access_token'))
-          };
-        }
-        return config;
-      }, function (error) {
-        if (error.response.status === 401) {
-          _this2.$router.push({
-            name: 'users.login'
-          });
-        }
-      });
-      this.api = api;
-    },
-    getCookie: function getCookie(cname) {
-      var name = cname + '=';
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(';');
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return '';
     }
   },
   mounted: function mounted() {
-    this.initApi();
     this.getFruits();
   }
 });
@@ -126,6 +80,67 @@ var staticRenderFns = [function () {
 }];
 render._withStripped = true;
 
+
+/***/ }),
+
+/***/ "./resources/js/api.js":
+/*!*****************************!*\
+  !*** ./resources/js/api.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+
+
+var api = axios__WEBPACK_IMPORTED_MODULE_0___default().create();
+
+// request
+api.interceptors.request.use(function (config) {
+  if (getCookie('access_token')) {
+    config.headers = {
+      'authorization': "Bearer ".concat(getCookie('access_token'))
+    };
+  }
+  return config;
+}, function (error) {});
+
+// response
+api.interceptors.response.use(function (config) {
+  if (getCookie('access_token')) {
+    config.headers = {
+      'authorization': "Bearer ".concat(getCookie('access_token'))
+    };
+  }
+  return config;
+}, function (error) {
+  if (error.response.status === 401) {
+    _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+      name: 'users.login'
+    });
+  }
+});
+function getCookie(cname) {
+  var name = cname + '=';
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (api);
 
 /***/ }),
 

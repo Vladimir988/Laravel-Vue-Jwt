@@ -5114,7 +5114,13 @@ var render = function render() {
         name: "users.registration"
       }
     }
-  }, [_vm._v("Registration")]), _vm._v(" "), _c("router-view")], 1);
+  }, [_vm._v("Registration")]), _vm._v(" "), _c("router-link", {
+    attrs: {
+      to: {
+        name: "users.personal"
+      }
+    }
+  }, [_vm._v("Personal")]), _vm._v(" "), _c("router-view")], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5221,6 +5227,12 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
     name: 'users.registration',
     component: function component() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_User_Registration_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/User/Registration */ "./resources/js/components/User/Registration.vue"));
+    }
+  }, {
+    path: '/users/personal',
+    name: 'users.personal',
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_User_Personal_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/User/Personal */ "./resources/js/components/User/Personal.vue"));
     }
   }]
 }));
@@ -42492,6 +42504,18 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -42522,7 +42546,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Fruit_Index_vue":1,"resources_js_components_User_Login_vue":1,"resources_js_components_User_Registration_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Fruit_Index_vue":1,"resources_js_components_User_Login_vue":1,"resources_js_components_User_Registration_vue":1,"resources_js_components_User_Personal_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

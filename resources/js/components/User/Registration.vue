@@ -29,7 +29,7 @@ export default {
                 password: this.password,
                 password_confirmation: this.password_confirmation
             }).then(response => {
-                console.log(response);
+                this.$router.push({name: 'users.personal'});
             });
         }
     }
