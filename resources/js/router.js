@@ -30,7 +30,7 @@ const route = new VueRouter({
         {
             path: '*',
             name: '404',
-            component: () => import('./components/404/404'),
+            component: () => import('./components/404/NotFound.vue'),
         }
     ],
 });
@@ -38,10 +38,14 @@ const route = new VueRouter({
 route.beforeEach((to, from, next) => {
     const token = cookie.get('access_token');
 
-    if (to.name !== 'users.login' && !token) {
-        return next({
-            name: 'users.login'
-        });
+    if (!token) {
+        if (to.name === 'users.login' || to.name === 'users.registration') {
+            return next();
+        } else {
+            return next({
+                name: 'users.login'
+            });
+        }
     }
 
     if (to.name === 'users.login' && token) {
