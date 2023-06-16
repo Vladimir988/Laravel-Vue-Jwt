@@ -96,32 +96,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cookie */ "./resources/js/cookie.js");
+
 
 
 var api = axios__WEBPACK_IMPORTED_MODULE_0___default().create();
 
 // request
 api.interceptors.request.use(function (config) {
-  if (getCookie('access_token')) {
-    config.headers.authorization = "Bearer ".concat(getCookie('access_token'));
+  if (_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
+    config.headers.authorization = "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'));
   }
   return config;
 }, function (error) {});
 
 // response
 api.interceptors.response.use(function (config) {
-  if (getCookie('access_token')) {
-    config.headers.authorization = "Bearer ".concat(getCookie('access_token'));
+  if (_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
+    config.headers.authorization = "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'));
   }
   return config;
 }, function (error) {
   if (error.response.data.message === 'Token has expired') {
     return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/auth/refresh', {}, {
       headers: {
-        'authorization': "Bearer ".concat(getCookie('access_token'))
+        'authorization': "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'))
       }
     }).then(function (response) {
-      setCookie('access_token', response.data.access_token, 1);
+      _cookie__WEBPACK_IMPORTED_MODULE_2__["default"].set('access_token', response.data.access_token, 1);
       error.config.headers.authorization = "Bearer ".concat(response.data.access_token);
       return api.request(error.config);
     });
@@ -131,27 +133,6 @@ api.interceptors.response.use(function (config) {
     });
   }
 });
-function getCookie(cname) {
-  var name = cname + '=';
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return '';
-}
-function setCookie(name, value, lifetime) {
-  var d = new Date();
-  d.setTime(d.getTime() + lifetime * 24 * 60 * 60 * 1000);
-  var expires = "expires=" + d.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (api);
 
 /***/ }),

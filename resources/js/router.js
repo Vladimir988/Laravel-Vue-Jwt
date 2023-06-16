@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import cookie from "./cookie";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const route = new VueRouter({
     mode: 'history',
     routes: [
         {
@@ -25,6 +26,31 @@ export default new VueRouter({
             path: '/users/personal',
             name: 'users.personal',
             component: () => import('./components/User/Personal'),
+        },
+        {
+            path: '*',
+            name: '404',
+            component: () => import('./components/404/404'),
         }
     ],
 });
+
+route.beforeEach((to, from, next) => {
+    const token = cookie.get('access_token');
+
+    if (to.name !== 'users.login' && !token) {
+        return next({
+            name: 'users.login'
+        });
+    }
+
+    if (to.name === 'users.login' && token) {
+        return next({
+            name: 'users.personal'
+        });
+    }
+
+    next();
+});
+
+export default route;
