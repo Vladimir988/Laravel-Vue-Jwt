@@ -83,60 +83,6 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./resources/js/api.js":
-/*!*****************************!*\
-  !*** ./resources/js/api.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var _cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cookie */ "./resources/js/cookie.js");
-
-
-
-var api = axios__WEBPACK_IMPORTED_MODULE_0___default().create();
-
-// request
-api.interceptors.request.use(function (config) {
-  if (_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
-    config.headers.authorization = "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'));
-  }
-  return config;
-}, function (error) {});
-
-// response
-api.interceptors.response.use(function (config) {
-  if (_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token')) {
-    config.headers.authorization = "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'));
-  }
-  return config;
-}, function (error) {
-  if (error.response.data.message === 'Token has expired') {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/auth/refresh', {}, {
-      headers: {
-        'authorization': "Bearer ".concat(_cookie__WEBPACK_IMPORTED_MODULE_2__["default"].get('access_token'))
-      }
-    }).then(function (response) {
-      _cookie__WEBPACK_IMPORTED_MODULE_2__["default"].set('access_token', response.data.access_token, 1);
-      error.config.headers.authorization = "Bearer ".concat(response.data.access_token);
-      return api.request(error.config);
-    });
-  } else {
-    _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
-      name: 'users.login'
-    });
-  }
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (api);
-
-/***/ }),
-
 /***/ "./resources/js/components/Fruit/Index.vue":
 /*!*************************************************!*\
   !*** ./resources/js/components/Fruit/Index.vue ***!

@@ -48,7 +48,7 @@ route.beforeEach((to, from, next) => {
         }
     }
 
-    if (to.name === 'users.login' && token) {
+    if ((to.name === 'users.login' || to.name === 'users.registration') && token) {
         return next({
             name: 'users.personal'
         });

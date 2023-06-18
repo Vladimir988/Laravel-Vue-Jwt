@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import cookie from "../../cookie";
 export default {
     name: "Registration",
     data() {
@@ -29,6 +30,7 @@ export default {
                 password: this.password,
                 password_confirmation: this.password_confirmation
             }).then(response => {
+                cookie.set('access_token', response.data.access_token, 1);
                 this.$router.push({name: 'users.personal'});
             });
         }
