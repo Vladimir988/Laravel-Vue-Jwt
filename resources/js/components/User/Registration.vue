@@ -5,6 +5,7 @@
             <input v-model="email" type="email" class="form-control mb-3" placeholder="Email">
             <input v-model="password" type="password" class="form-control mb-3" placeholder="Password">
             <input v-model="password_confirmation" type="password" class="form-control mb-3" placeholder="Confirm password">
+            <div v-if="error" class="text-danger mb-3">{{ error }}</div>
             <input @click.prevent="store" type="submit" class="btn btn-outline-success">
         </div>
     </div>
@@ -20,6 +21,7 @@ export default {
             email: null,
             password: null,
             password_confirmation: null,
+            error: null,
         }
     },
     methods: {
@@ -32,6 +34,8 @@ export default {
             }).then(response => {
                 cookie.set('access_token', response.data.access_token, 1);
                 this.$router.push({name: 'users.personal'});
+            }).catch(error => {
+                this.error = error.response.data.message;
             });
         }
     }

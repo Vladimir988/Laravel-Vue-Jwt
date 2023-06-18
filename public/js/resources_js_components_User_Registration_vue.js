@@ -20,7 +20,8 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       email: null,
       password: null,
-      password_confirmation: null
+      password_confirmation: null,
+      error: null
     };
   },
   methods: {
@@ -36,6 +37,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: 'users.personal'
         });
+      })["catch"](function (error) {
+        _this.error = error.response.data.message;
       });
     }
   }
@@ -143,7 +146,9 @@ var render = function render() {
         _vm.password_confirmation = $event.target.value;
       }
     }
-  }), _vm._v(" "), _c("input", {
+  }), _vm._v(" "), _vm.error ? _c("div", {
+    staticClass: "text-danger mb-3"
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _vm._v(" "), _c("input", {
     staticClass: "btn btn-outline-success",
     attrs: {
       type: "submit"

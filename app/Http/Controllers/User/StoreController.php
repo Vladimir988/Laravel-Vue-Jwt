@@ -16,7 +16,7 @@ class StoreController extends Controller
 
         $user = User::where('email', $data['email'])->first();
         if($user) {
-            return response(['message' => 'User with this email already exists!']);
+            return response(['message' => 'User with this email already exists!'], 403);
         }
 
         $user  = User::create($data);

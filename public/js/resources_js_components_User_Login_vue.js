@@ -16,7 +16,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       email: null,
-      password: null
+      password: null,
+      error: null
     };
   },
   methods: {
@@ -32,6 +33,8 @@ __webpack_require__.r(__webpack_exports__);
             name: 'users.personal'
           });
         }
+      })["catch"](function (error) {
+        _this.error = error.response.data.error;
       });
     },
     setCookie: function setCookie(name, value, lifetime) {
@@ -103,7 +106,9 @@ var render = function render() {
         _vm.password = $event.target.value;
       }
     }
-  }), _vm._v(" "), _c("input", {
+  }), _vm._v(" "), _vm.error ? _c("div", {
+    staticClass: "text-danger mb-3"
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _vm._v(" "), _c("input", {
     staticClass: "btn btn-outline-success",
     attrs: {
       type: "submit"
